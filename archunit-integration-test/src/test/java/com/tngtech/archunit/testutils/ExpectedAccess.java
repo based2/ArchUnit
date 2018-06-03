@@ -1,22 +1,18 @@
-package com.tngtech.archunit.junit;
+package com.tngtech.archunit.testutils;
 
 import com.google.common.collect.ImmutableSet;
 import com.tngtech.archunit.core.domain.Dependency;
 import com.tngtech.archunit.core.domain.JavaAccess;
 import com.tngtech.archunit.core.domain.JavaFieldAccess;
-import com.tngtech.archunit.junit.ExpectedMember.ExpectedConstructorTarget;
-import com.tngtech.archunit.junit.ExpectedMember.ExpectedMethodTarget;
-import com.tngtech.archunit.junit.ExpectedMember.ExpectedOrigin;
-import com.tngtech.archunit.junit.ExpectedMember.ExpectedTarget;
 
 import static com.tngtech.archunit.core.domain.JavaConstructor.CONSTRUCTOR_NAME;
 
 public abstract class ExpectedAccess implements ExpectedRelation {
-    private final ExpectedOrigin origin;
-    private final ExpectedTarget target;
+    private final ExpectedMember.ExpectedOrigin origin;
+    private final ExpectedMember.ExpectedTarget target;
     private final int lineNumber;
 
-    ExpectedAccess(ExpectedOrigin origin, ExpectedTarget target, int lineNumber) {
+    ExpectedAccess(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedTarget target, int lineNumber) {
         this.origin = origin;
         this.target = target;
         this.lineNumber = lineNumber;
@@ -27,11 +23,11 @@ public abstract class ExpectedAccess implements ExpectedRelation {
         association.associateIfStringIsContained(target.messageFor(this));
     }
 
-    ExpectedOrigin getOrigin() {
+    ExpectedMember.ExpectedOrigin getOrigin() {
         return origin;
     }
 
-    ExpectedTarget getTarget() {
+    ExpectedMember.ExpectedTarget getTarget() {
         return target;
     }
 
@@ -70,10 +66,10 @@ public abstract class ExpectedAccess implements ExpectedRelation {
     public abstract ExpectedDependency asDependency();
 
     public static class ExpectedAccessViolationCreationProcess {
-        private ExpectedOrigin origin;
+        private ExpectedMember.ExpectedOrigin origin;
 
         private ExpectedAccessViolationCreationProcess(Class<?> clazz, String method, Class<?>[] paramTypes) {
-            origin = new ExpectedOrigin(clazz, method, paramTypes);
+            origin = new ExpectedMember.ExpectedOrigin(clazz, method, paramTypes);
         }
 
         public ExpectedFieldAccessViolationBuilderStep1 accessing() {
@@ -90,30 +86,30 @@ public abstract class ExpectedAccess implements ExpectedRelation {
 
         public ExpectedCallViolationBuilder toMethod(Class<?> target, String member, Class<?>... paramTypes) {
             return new ExpectedCallViolationBuilder(
-                    origin, new ExpectedMethodTarget(target, member, paramTypes));
+                    origin, new ExpectedMember.ExpectedMethodTarget(target, member, paramTypes));
         }
 
         public ExpectedCallViolationBuilder toConstructor(Class<?> target, Class<?>... paramTypes) {
             return new ExpectedCallViolationBuilder(
-                    origin, new ExpectedConstructorTarget(target, paramTypes));
+                    origin, new ExpectedMember.ExpectedConstructorTarget(target, paramTypes));
         }
     }
 
     private abstract static class ExpectedAccessViolationBuilder {
-        final ExpectedOrigin origin;
-        final ExpectedTarget target;
+        final ExpectedMember.ExpectedOrigin origin;
+        final ExpectedMember.ExpectedTarget target;
 
-        private ExpectedAccessViolationBuilder(ExpectedOrigin origin, ExpectedTarget target) {
+        private ExpectedAccessViolationBuilder(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedTarget target) {
             this.origin = origin;
             this.target = target;
         }
     }
 
     public static class ExpectedFieldAccessViolationBuilderStep1 {
-        private final ExpectedOrigin origin;
+        private final ExpectedMember.ExpectedOrigin origin;
         private final ImmutableSet<JavaFieldAccess.AccessType> accessType;
 
-        private ExpectedFieldAccessViolationBuilderStep1(ExpectedOrigin origin, JavaFieldAccess.AccessType... accessType) {
+        private ExpectedFieldAccessViolationBuilderStep1(ExpectedMember.ExpectedOrigin origin, JavaFieldAccess.AccessType... accessType) {
             this.origin = origin;
             this.accessType = ImmutableSet.copyOf(accessType);
         }
@@ -125,7 +121,7 @@ public abstract class ExpectedAccess implements ExpectedRelation {
     }
 
     public static class ExpectedFieldAccessViolationBuilderStep2 extends ExpectedAccessViolationBuilder {
-        private ExpectedFieldAccessViolationBuilderStep2(ExpectedOrigin origin, ExpectedMember.ExpectedFieldTarget target) {
+        private ExpectedFieldAccessViolationBuilderStep2(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedFieldTarget target) {
             super(origin, target);
         }
 
@@ -135,7 +131,7 @@ public abstract class ExpectedAccess implements ExpectedRelation {
     }
 
     public static class ExpectedCallViolationBuilder extends ExpectedAccessViolationBuilder {
-        private ExpectedCallViolationBuilder(ExpectedOrigin origin, ExpectedMethodTarget target) {
+        private ExpectedCallViolationBuilder(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedMethodTarget target) {
             super(origin, target);
         }
 
@@ -145,7 +141,7 @@ public abstract class ExpectedAccess implements ExpectedRelation {
     }
 
     public static class ExpectedFieldAccess extends ExpectedAccess {
-        private ExpectedFieldAccess(ExpectedOrigin origin, ExpectedTarget target, int lineNumber) {
+        private ExpectedFieldAccess(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedTarget target, int lineNumber) {
             super(origin, target, lineNumber);
         }
 
@@ -158,7 +154,7 @@ public abstract class ExpectedAccess implements ExpectedRelation {
     }
 
     public static class ExpectedCall extends ExpectedAccess {
-        private ExpectedCall(ExpectedOrigin origin, ExpectedTarget target, int lineNumber) {
+        private ExpectedCall(ExpectedMember.ExpectedOrigin origin, ExpectedMember.ExpectedTarget target, int lineNumber) {
             super(origin, target, lineNumber);
         }
 

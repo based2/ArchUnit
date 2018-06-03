@@ -81,9 +81,9 @@ import com.tngtech.archunit.example.thirdparty.ThirdPartySubClassWithProblem;
 import com.tngtech.archunit.example.web.AnnotatedController;
 import com.tngtech.archunit.example.web.InheritedControllerImpl;
 import com.tngtech.archunit.exampletest.SecurityTest;
-import com.tngtech.archunit.junit.CyclicErrorMatcher;
-import com.tngtech.archunit.junit.ExpectedTestFailures;
-import com.tngtech.archunit.junit.MessageAssertionChain;
+import com.tngtech.archunit.testutils.CyclicErrorMatcher;
+import com.tngtech.archunit.testutils.ExpectedTestFailures;
+import com.tngtech.archunit.testutils.MessageAssertionChain;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
@@ -98,16 +98,16 @@ import static com.tngtech.archunit.example.controller.three.UseCaseThreeControll
 import static com.tngtech.archunit.example.controller.two.UseCaseTwoController.doSomethingTwo;
 import static com.tngtech.archunit.example.persistence.layerviolation.DaoCallingService.violateLayerRules;
 import static com.tngtech.archunit.example.service.ServiceViolatingLayerRules.illegalAccessToController;
-import static com.tngtech.archunit.junit.CyclicErrorMatcher.cycle;
-import static com.tngtech.archunit.junit.ExpectedAccess.accessFrom;
-import static com.tngtech.archunit.junit.ExpectedAccess.callFrom;
-import static com.tngtech.archunit.junit.ExpectedDependency.inheritanceFrom;
-import static com.tngtech.archunit.junit.ExpectedLocation.javaClass;
-import static com.tngtech.archunit.junit.ExpectedMethod.method;
-import static com.tngtech.archunit.junit.ExpectedNaming.simpleNameOf;
-import static com.tngtech.archunit.junit.ExpectedViolation.clazz;
-import static com.tngtech.archunit.junit.ExpectedViolation.javaPackageOf;
-import static com.tngtech.archunit.junit.SliceDependencyErrorMatcher.sliceDependency;
+import static com.tngtech.archunit.testutils.CyclicErrorMatcher.cycle;
+import static com.tngtech.archunit.testutils.ExpectedAccess.accessFrom;
+import static com.tngtech.archunit.testutils.ExpectedAccess.callFrom;
+import static com.tngtech.archunit.testutils.ExpectedDependency.inheritanceFrom;
+import static com.tngtech.archunit.testutils.ExpectedLocation.javaClass;
+import static com.tngtech.archunit.testutils.ExpectedMethod.method;
+import static com.tngtech.archunit.testutils.ExpectedNaming.simpleNameOf;
+import static com.tngtech.archunit.testutils.ExpectedViolation.clazz;
+import static com.tngtech.archunit.testutils.ExpectedViolation.javaPackageOf;
+import static com.tngtech.archunit.testutils.SliceDependencyErrorMatcher.sliceDependency;
 import static java.lang.System.lineSeparator;
 
 class ExamplesIntegrationTest {
