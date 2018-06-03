@@ -1,4 +1,4 @@
-package com.tngtech.archunit.exampletest.junit;
+package com.tngtech.archunit.exampletest.junit5;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +11,15 @@ import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.properties.HasModifiers;
 import com.tngtech.archunit.core.domain.properties.HasOwner.Functions.Get;
 import com.tngtech.archunit.example.anticorruption.WrappedResult;
-import com.tngtech.archunit.exampletest.Example;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.junit.ArchUnitRunner;
 import com.tngtech.archunit.lang.AbstractClassesTransformer;
 import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.ClassesTransformer;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
-import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Tag;
 
 import static com.tngtech.archunit.core.domain.Formatters.formatLocation;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAPackage;
@@ -30,8 +27,7 @@ import static com.tngtech.archunit.core.domain.JavaModifier.PUBLIC;
 import static com.tngtech.archunit.core.domain.properties.HasModifiers.Predicates.modifier;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.all;
 
-@Category(Example.class)
-@RunWith(ArchUnitRunner.class)
+@Tag("example")
 @AnalyzeClasses(packages = "com.tngtech.archunit.example")
 public class MethodReturnTypeTest {
 

@@ -38,7 +38,7 @@ import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine;
  * </code></pre>
  */
 @Internal
-public class ArchUnitTestEngine extends HierarchicalTestEngine<ArchUnitEngineExecutionContext> {
+public final class ArchUnitTestEngine extends HierarchicalTestEngine<ArchUnitEngineExecutionContext> {
     private SharedCache cache = new SharedCache(); // NOTE: We want to change this in tests -> no static/final reference
 
     @Override
